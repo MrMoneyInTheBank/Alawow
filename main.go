@@ -44,4 +44,17 @@ func main() {
 	if err != nil {
 		fmt.Println("Couldn't change alacritty security permissions")
 	}
+
+	err = ala.InstallNerdFont()
+	if err != nil {
+		fmt.Println("Could not install a NerdFont")
+		os.Exit(1)
+	}
+
+	err = ala.GenerateAlacrittyConfig()
+	if err != nil {
+		fmt.Println("Could not apply Alacritty config: ", err)
+		os.Exit(1)
+	}
+	fmt.Println("All done! ✅✅✅\n\n Now enter\n\nopen -a alacritty")
 }

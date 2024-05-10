@@ -32,4 +32,16 @@ func main() {
 	} else {
 		ala.InstallAlacritty()
 	}
+
+	path, err := ala.FindAlacrittyApp()
+	if err != nil {
+		fmt.Println("Could not find alacritty")
+	} else {
+		fmt.Println("Alacritty is at: ", path)
+	}
+
+	err = ala.RemoveQuarantine(path)
+	if err != nil {
+		fmt.Println("Couldn't change alacritty security permissions")
+	}
 }

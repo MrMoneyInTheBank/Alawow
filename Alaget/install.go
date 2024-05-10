@@ -9,7 +9,7 @@ import (
 
 func progressDots(done chan struct{}, pack string) {
 	defer close(done)
-	fmt.Printf("Downloading %s ", pack)
+	fmt.Printf("\nDownloading %s ", pack)
 	for {
 		select {
 		case <-done:
@@ -41,6 +41,6 @@ func InstallAlacritty() {
 		fmt.Println("Could not install Alacritty")
 		os.Exit(1)
 	} else {
-		fmt.Println("\nAlacritty installed successfully ✅")
+		fmt.Println("Alacritty installed successfully ✅")
 	}
 }

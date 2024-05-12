@@ -25,9 +25,36 @@ func InstallHomebrew() {
 	if err != nil {
 		fmt.Println("Could not install homebrew. Exiting...")
 		os.Exit(1)
-	} else {
-		fmt.Print("Homebrew installed successfully ✅\n\n")
 	}
+	fmt.Print("\nHomebrew downloaded successfully ✅\n\n")
+
+	message, err := addHomebrewToPath()
+	fmt.Print(message)
+	if err != nil {
+		os.Exit(1)
+	}
+}
+
+func addHomebrewToPath() (string, error) {
+	file, err := os.OpenFile("~/.zprofile", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return "Could not open ~/.zprofile. Exiting...", err
+	}
+	defer file.Close()
+
+	// Write the commands to the file
+	_, err = file.WriteString("\n" + "eval \"$(/opt/homebrew/bin/brew shellenv)\"\n")
+	if err != nil {
+		return "Could not edit ~/.zprofile. Exiting...", err
+	}
+
+	// Execute the shell command to update the shell environment
+	cmd := exec.Command("bash", "-c", "eval \"$(/opt/homebrew/bin/brew shellenv)\"")
+	if err := cmd.Run(); err != nil {
+		return "Could not source ~/.zprofile. Exiting...", err
+	}
+
+	return "Homebrew added to path ✅", nil
 }
 
 func InstallGit() {

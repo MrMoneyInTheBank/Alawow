@@ -48,7 +48,7 @@ func main() {
 	err = ala.InstallNerdFont()
 	if err != nil {
 		fmt.Println("Could not install a NerdFont")
-		os.Exit(1)
+		fmt.Println(err)
 	}
 
 	err = ala.GenerateAlacrittyConfig()

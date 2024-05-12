@@ -41,6 +41,6 @@ func InstallAlacritty() {
 		fmt.Println("Could not install Alacritty")
 		os.Exit(1)
 	} else {
-		fmt.Println("Alacritty installed successfully ✅")
+		fmt.Println("\nAlacritty installed successfully ✅")
 	}
 }

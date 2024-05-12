@@ -1,6 +1,7 @@
 package Alaget
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -43,7 +44,7 @@ func InstallNerdFont() error {
 		return err
 	}
 
-	cmd = exec.Command("brew", "install", "font-bigblue-terminal-nerd-font")
+	cmd = exec.Command("brew", "install", "font-jetbrains-mono-nerd-font")
 
 	err = cmd.Run()
 	if err != nil {
@@ -58,11 +59,13 @@ func GenerateAlacrittyConfig() error {
 	if err != nil {
 		return err
 	}
-
 	// Construct the destination file path
 	destDirPath := filepath.Join(homeDir, ".config", "alacritty")
 	destFilePath := filepath.Join(destDirPath, "alacritty.toml")
 
+	// Delete existing alacritty config
+	cmd := exec.Command("rm", "-rf", "~/.config/alacritty")
+	cmd.Run()
 	// Create the destination directory if it doesn't exist
 	err = os.MkdirAll(destDirPath, 0755)
 	if err != nil {
@@ -73,7 +76,7 @@ func GenerateAlacrittyConfig() error {
 	config := `# Default Alacritty configuration
 
 [font]
-normal.family = "BigBlueTerm437 Nerd Font"
+normal.family = "JetBrainsMono Nerd Font"
 size = 20
 `
 
@@ -91,4 +94,13 @@ size = 20
 	}
 
 	return nil
+}
+
+func OpenAlacritty() {
+	cmd := exec.Command("open", "-a", "alacritty")
+	_, err := cmd.Output()
+	if err != nil {
+		fmt.Printf("Could not open Alacritty: %s", err)
+	}
+	fmt.Println("Opened")
 }
